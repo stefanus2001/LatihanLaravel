@@ -12,7 +12,7 @@ class userController extends Controller
      */
     public function index()
     {
-        $user = User::where('flag_active', 1)->orderBy("user_id", "asc")->get();
+        $user = User::where('flag_active', 1)->orWhere('flag_active', 0)->orderBy("user_id", "asc")->get();
 
         return view('user', [
             'users' =>  $user
@@ -24,19 +24,25 @@ class userController extends Controller
      */
     public function create(Request $request)
     {
-        $validatedData = $request->validate([
-            'user_id' => 'required',
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'flag_active' => 'required'
-        ]);
+        $check = User::find($request->user_id);
 
-        $validatedData['password'] = bcrypt($validatedData['password']);
+        if ($check) {
+            return redirect('/user')->with('error', 'Gagal menambahkan Data!!! Data User ID sudah digunakan!!!');
+        } else {
+            $validatedData = $request->validate([
+                'user_id' => 'required',
+                'name' => 'required',
+                'email' => 'required',
+                'password' => 'required',
+                'flag_active' => 'required'
+            ]);
 
-        User::create($validatedData);
+            $validatedData['password'] = bcrypt($validatedData['password']);
 
-        return redirect('/user')->with('success', 'Data User Berhasil Ditambahkan !!!');
+            User::create($validatedData);
+
+            return redirect('/user')->with('success', 'Data User Berhasil Ditambahkan !!!');
+        }
     }
 
     /**

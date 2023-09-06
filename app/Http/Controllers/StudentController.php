@@ -13,6 +13,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+
         $student = Student::where('flag_active', 1)->orderBy("student_id", "asc")->get();
 
         return view('student', [
@@ -25,16 +26,22 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
-        $validatedData = $request->validate([
-            'student_id' => 'required',
-            'student_name' => 'required',
-            'date_of_birth' => 'required',
-            'year_entrance' => 'required',
-        ]);
+        $check = Student::find($request->student_id);
 
-        Student::create($validatedData);
+        if ($check) {
+            return redirect('/student')->with('error', 'Gagal menambahkan Data!!! Data Student ID sudah digunakan!!!');
+        } else {
+            $validatedData = $request->validate([
+                'student_id' => 'required',
+                'student_name' => 'required',
+                'date_of_birth' => 'required',
+                'year_entrance' => 'required',
+            ]);
 
-        return redirect('/student')->with('success', 'Data Student Berhasil Ditambahkan !!!');
+            Student::create($validatedData);
+
+            return redirect('/student')->with('success', 'Data Student Berhasil Ditambahkan !!!');
+        }
     }
 
     public function edit(Request $request)

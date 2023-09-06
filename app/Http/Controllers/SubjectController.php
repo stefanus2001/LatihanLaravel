@@ -21,16 +21,22 @@ class SubjectController extends Controller
 
     public function create(Request $request)
     {
-        $validatedData = $request->validate([
-            'subject_id' => 'required',
-            'subject_name' => 'required',
-            'credit' => 'required',
-            'subject_pre_required' => 'required',
-        ]);
+        $check = Subject::find($request->subject_id);
 
-        Subject::create($validatedData);
+        if ($check) {
+            return redirect('/subject')->with('error', 'Gagal menambahkan Data!!! Data Subject ID sudah digunakan!!!');
+        } else {
+            $validatedData = $request->validate([
+                'subject_id' => 'required',
+                'subject_name' => 'required',
+                'credit' => 'required',
+                'subject_pre_required' => 'required',
+            ]);
 
-        return redirect('/subject')->with('success', 'Data Subject Berhasil Ditambahkan !!!');
+            Subject::create($validatedData);
+
+            return redirect('/subject')->with('success', 'Data Subject Berhasil Ditambahkan !!!');
+        }
     }
 
     public function edit(Request $request)

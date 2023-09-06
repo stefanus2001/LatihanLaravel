@@ -931,6 +931,15 @@
     width: 121px;
   }
 
+  .student-page .logout-button {
+    background-color: transparent;
+    height: 50px;
+    left: 950px;
+    position: absolute;
+    top: 23px;
+    width: 121px;
+  }
+
   .student-page .logout:hover {
     height: 53px;
     left: 948px;
@@ -1143,45 +1152,6 @@
     width: 0;
     height: 0;
   }
-
-  /* The slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background: #9fccfa;
-    border-radius: 50px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    display: flex;
-    margin-top: 2px;
-    margin-left: 1px;
-    align-items: center;
-    justify-content: center;
-    height: 1.7em;
-    width: 1.7em;
-    inset: 0;
-    background-color: white;
-    border-radius: 50px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .switch input:checked + .slider {
-    background: #0974f1;
-  }
-/*
-  .switch input:focus + .slider {
-    box-shadow: 0 0 1px #0974f1;
-  } */
-
-  .switch input:checked + .slider:before {
-    transform: translateX(1.6em);
-  }
-
 
 /* Logout */
   .Btn {

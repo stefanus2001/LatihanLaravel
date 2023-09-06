@@ -52,3 +52,4 @@ Route::get('/report/export', [ReportController::class,'export']);
 
 Route::get('/profile', [ProfileController::class,'index']);
 Route::post('/profile/update', [ProfileController::class,'edit']);
+Route::post('/profile/changePassword', [ProfileController::class,'changePassword']);
